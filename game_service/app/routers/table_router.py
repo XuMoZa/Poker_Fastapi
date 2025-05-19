@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from services.table_service import get_table_bd
+from services.table_service import get_table_bd, drop_db
 from fastapi import HTTPException
 router = APIRouter()
 
