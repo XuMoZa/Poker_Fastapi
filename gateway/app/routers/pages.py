@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Form, HTTPException, status
+from fastapi import APIRouter, Request, Form, HTTPException, status, Depends
 from starlette.responses import HTMLResponse
 from core.settings import templates
 import pydantic
@@ -7,6 +7,15 @@ from datetime import date
 from services.service import generate_token
 router = APIRouter()
 
+async def get_tables_by_game_type(game_type: str):
+    async with httpx.AsyncClient() as client:
+        response = await client.post("http://table_service:8002/table/get_tables", json={
+            "game_type": game_type
+        })
+    if response.status_code == 200:
+        return response.json().get("tables", [])
+    else:
+        return None
 
 @router.get("/", response_class=HTMLResponse)
 async def base_page(request: Request):
@@ -79,44 +88,21 @@ async def home_page(request: Request, email: str = Form(...), password: str = Fo
 async def get_home_page(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
-@router.get("/tables/omaha", response_class=HTMLResponse)
-async def get_tables_omaha(request: Request):
-    async with httpx.AsyncClient() as client:
+@router.get("/tables/omaha")
+async def omaha_tables(request: Request, tables=Depends(lambda: get_tables_by_game_type("omaha"))):
+    if tables is not None:
+        return templates.TemplateResponse("tables.html", {"request": request, "tables": tables})
+    return templates.TemplateResponse("home.html", {"request": request, "message": "tables failed"})
 
-        response = await client.post("http://table_service:8001/table/get_tables", json={
-            "game_type": "omaha"
-        })
-    if response.status_code == 200:
-        data = response.json()
-        tables = data["tables"]
-        return templates.TemplateResponse("tables.html", {"request": request, "tables" : tables})
-    else:
-        return templates.TemplateResponse("home.html", {"request": request, "message": "tables failed"})
 
-@router.get("/tables/texas", response_class=HTMLResponse)
-async def get_tables_omaha(request: Request):
-    async with httpx.AsyncClient() as client:
+@router.get("/tables/texas")
+async def texas_tables(request: Request, tables=Depends(lambda: get_tables_by_game_type("texas"))):
+    if tables is not None:
+        return templates.TemplateResponse("tables.html", {"request": request, "tables": tables})
+    return templates.TemplateResponse("home.html", {"request": request, "message": "tables failed"})
 
-        response = await client.post("http://table_service:8001/table/get_tables", json={
-            "game_type": "texas"
-        })
-    if response.status_code == 200:
-        data = response.json()
-        tables = data["tables"]
-        return templates.TemplateResponse("tables.html", {"request": request, "tables" : tables})
-    else:
-        return templates.TemplateResponse("home.html", {"request": request, "message": "tables failed"})
-
-@router.get("/tables/blackjack", response_class=HTMLResponse)
-async def get_tables_omaha(request: Request):
-    async with httpx.AsyncClient() as client:
-
-        response = await client.post("http://table_service:8001/table/get_tables", json={
-            "game_type": "blackjack"
-        })
-    if response.status_code == 200:
-        data = response.json()
-        tables = data["tables"]
-        return templates.TemplateResponse("tables.html", {"request": request, "tables" : tables})
-    else:
-        return templates.TemplateResponse("home.html", {"request": request, "message": "tables failed"})
+@router.get("/tables/blackjack")
+async def blackjack_tables(request: Request, tables=Depends(lambda: get_tables_by_game_type("blackjack"))):
+    if tables is not None:
+        return templates.TemplateResponse("tables.html", {"request": request, "tables": tables})
+    return templates.TemplateResponse("home.html", {"request": request, "message": "tables failed"})
