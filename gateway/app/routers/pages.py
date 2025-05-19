@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Form, HTTPException, status
 from starlette.responses import HTMLResponse
-from main import templates
+from core.settings import templates
 import pydantic
 import httpx
 from datetime import date
@@ -74,3 +74,7 @@ async def home_page(request: Request, email: str = Form(...), password: str = Fo
             return templates.TemplateResponse("base_page.html", {"request": request, "message": data["message"]})
     else:
         return templates.TemplateResponse("base_page.html", {"request": request, "message": "authorization failed"})
+
+@router.get("/home", response_class=HTMLResponse)
+async def get_home_page(request: Request):
+    return templates.TemplateResponse("home.html", {"request": request})

@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Hub</title>
+    <link rel="stylesheet" href="/static/home.css">
 </head>
 <body>
+<form id="table-selection-form">
+  <h2>Выбери игру:</h2>
+  <div class="button-group" id="game-buttons">
+    <button type="button" class="game-button" data-game="omaha">Омаха</button>
+    <button type="button" class="game-button" data-game="texas_holdem">Техасский Холдем</button>
+    <button type="button" class="game-button" data-game="blackjack">Блэкджек</button>
+  </div>
 
+  <input type="hidden" name="game_type" id="game_type_input">
+  <input type="hidden" name="is_tournament" id="is_tournament_input">
+</form>
+
+
+
+    <div class="background-shapes">
+    <!-- First wave -->
+    <span style="left: 5%; animation-delay: 0s;">♠</span>
+    <span style="left: 10%; animation-delay: 2s;">♥</span>
+    <span style="left: 15%; animation-delay: 4s;">♦</span>
+    <span style="left: 20%; animation-delay: 1s;">♣</span>
+    <span style="left: 25%; animation-delay: 3s;">♠</span>
+    <span style="left: 30%; animation-delay: 5s;">♥</span>
+
+    <!-- Second wave -->
+    <span style="left: 35%; animation-delay: 1s;">♣</span>
+    <span style="left: 40%; animation-delay: 0s;">♦</span>
+    <span style="left: 45%; animation-delay: 4s;">♠</span>
+    <span style="left: 50%; animation-delay: 3s;">♥</span>
+    <span style="left: 55%; animation-delay: 2s;">♣</span>
+    <span style="left: 60%; animation-delay: 5s;">♦</span>
+
+    <!-- Third wave -->
+    <span style="left: 65%; animation-delay: 0.5s;">♠</span>
+    <span style="left: 70%; animation-delay: 2.5s;">♥</span>
+    <span style="left: 75%; animation-delay: 1.5s;">♦</span>
+    <span style="left: 80%; animation-delay: 4.5s;">♣</span>
+    <span style="left: 85%; animation-delay: 3.5s;">♠</span>
+    <span style="left: 90%; animation-delay: 2s;">♥</span>
+    <span style="left: 95%; animation-delay: 1s;">♦</span>
+</div>
 </body>
 </html>
