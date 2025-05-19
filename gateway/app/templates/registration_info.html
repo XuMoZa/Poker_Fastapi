@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Hub</title>
+    <link rel="stylesheet" href="/registration.css">
+</head>
+<body>
+    <form action="/" method="POST">
+        <h1>Poker Hub</h1>
+
+        <label for="name">Имя</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="last_name">Фамилия</label>
+        <input type="text" id="last_name" name="last_name" required>
+
+        <label for="birthday">Дата рождения</label>
+        <input type="date" id="birthday" name="birthday" required>
+
+        <label for="nickname">Никнейм</label>
+        <input type="text" id="nickname" name="nickname" required>
+
+        <input type="text" id="email" name="email" value="{{ email }}" readonly hidden="hidden">
+
+        <div class="form-buttons">
+            <button type="submit" name="action" value="register">Отправить</button>
+        </div>
+    </form>
+
+    <div class="background-shapes">
+        <span style="left: 5%; animation-delay: 0s; font-size: 32px;">♠</span>
+        <span style="left: 10%; animation-delay: 2s; font-size: 26px;">♥</span>
+        <span style="left: 20%; animation-delay: 4s; font-size: 30px;">♦</span>
+        <span style="left: 30%; animation-delay: 1s; font-size: 28px;">♣</span>
+        <span style="left: 40%; animation-delay: 3s; font-size: 34px;">♠</span>
+        <span style="left: 50%; animation-delay: 2.5s; font-size: 24px;">♥</span>
+        <span style="left: 60%; animation-delay: 0.5s; font-size: 30px;">♦</span>
+        <span style="left: 70%; animation-delay: 1.5s; font-size: 28px;">♣</span>
+        <span style="left: 80%; animation-delay: 4.5s; font-size: 26px;">♠</span>
+        <span style="left: 90%; animation-delay: 3.5s; font-size: 32px;">♥</span>
+    </div>
+</body>
+</html>
