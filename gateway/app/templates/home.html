@@ -10,9 +10,9 @@
 <form id="table-selection-form">
   <h2>Выбери игру:</h2>
   <div class="button-group" id="game-buttons">
-    <button type="button" class="game-button" data-game="omaha">Омаха</button>
-    <button type="button" class="game-button" data-game="texas_holdem">Техасский Холдем</button>
-    <button type="button" class="game-button" data-game="blackjack">Блэкджек</button>
+    <button type="button" onclick="window.location.href='/tables/omaha'" class="game-button" data-game="omaha">Омаха</button>
+    <button type="button" onclick="window.location.href='/tables/texas'" class="game-button" data-game="texas_holdem">Техасский Холдем</button>
+    <button type="button" onclick="window.location.href='/tables/blackjack'" class="game-button" data-game="blackjack">Блэкджек</button>
   </div>
 
   <input type="hidden" name="game_type" id="game_type_input">

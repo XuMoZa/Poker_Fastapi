@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Form, HTTPException, status
 import pydantic
 from starlette.responses import HTMLResponse
-from services.user_service import drop_db, create_user, no_info_user, add_user_info, authenticate_user
+from services .user_service import drop_db, create_user, no_info_user, add_user_info, authenticate_user
 from core.settings import security
 from datetime import date, datetime
 

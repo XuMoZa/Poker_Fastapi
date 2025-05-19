@@ -13,21 +13,13 @@ database = new_session()
 class Base(DeclarativeBase):
     pass
 
-class GameType(str, enum.Enum):
-    omaha = "omaha"
-    texas = "texas_holdem"
-
-class GameMode(str, enum.Enum):
-    casual = "casual"
-    tournament = "tournament"
-
 class Table(Base):
     __tablename__ = "tables"
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    game_type = Column(Enum(GameType))
-    mode = Column(Enum(GameMode))
+    game_type = Column(String)
+    mode = Column(String)
     min_buy_in = Column(Integer)
     max_players = Column(Integer)
     current_players = Column(Integer, default=0)
@@ -36,7 +28,7 @@ class Table(Base):
     players = relationship("TablePlayer", back_populates="table")
 
     def update_activity_status(self):
-        if self.mode == GameMode.tournament:
+        if self.mode == "tournament":
             self.is_active = self.current_players >= self.max_players
         else:
             self.is_active = self.current_players > 1

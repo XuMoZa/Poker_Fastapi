@@ -78,3 +78,45 @@ async def home_page(request: Request, email: str = Form(...), password: str = Fo
 @router.get("/home", response_class=HTMLResponse)
 async def get_home_page(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
+
+@router.get("/tables/omaha", response_class=HTMLResponse)
+async def get_tables_omaha(request: Request):
+    async with httpx.AsyncClient() as client:
+
+        response = await client.post("http://table_service:8001/table/get_tables", json={
+            "game_type": "omaha"
+        })
+    if response.status_code == 200:
+        data = response.json()
+        tables = data["tables"]
+        return templates.TemplateResponse("tables.html", {"request": request, "tables" : tables})
+    else:
+        return templates.TemplateResponse("home.html", {"request": request, "message": "tables failed"})
+
+@router.get("/tables/texas", response_class=HTMLResponse)
+async def get_tables_omaha(request: Request):
+    async with httpx.AsyncClient() as client:
+
+        response = await client.post("http://table_service:8001/table/get_tables", json={
+            "game_type": "texas"
+        })
+    if response.status_code == 200:
+        data = response.json()
+        tables = data["tables"]
+        return templates.TemplateResponse("tables.html", {"request": request, "tables" : tables})
+    else:
+        return templates.TemplateResponse("home.html", {"request": request, "message": "tables failed"})
+
+@router.get("/tables/blackjack", response_class=HTMLResponse)
+async def get_tables_omaha(request: Request):
+    async with httpx.AsyncClient() as client:
+
+        response = await client.post("http://table_service:8001/table/get_tables", json={
+            "game_type": "blackjack"
+        })
+    if response.status_code == 200:
+        data = response.json()
+        tables = data["tables"]
+        return templates.TemplateResponse("tables.html", {"request": request, "tables" : tables})
+    else:
+        return templates.TemplateResponse("home.html", {"request": request, "message": "tables failed"})
