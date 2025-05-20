@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Form, HTTPException, status
 import pydantic
 from starlette.responses import HTMLResponse
-from services .user_service import drop_db, create_user, no_info_user, add_user_info, authenticate_user
+from services .auth_service import drop_db, create_user, authenticate_user, user_id_by_email
 from core.settings import security
 from datetime import date, datetime
 
@@ -19,20 +19,6 @@ async def registration_success(payload: dict):
     except ValueError as e:
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
-@router.post("/auth/registrate")
-async def registration_with_info(payload: dict):
-
-    email = payload.get("email")
-    name = payload.get("name")
-    last_name = payload.get("last_name")
-    birthday = payload.get("birthday")
-    nickname = payload.get("nickname")
-    date_obj = datetime.strptime(birthday, "%Y-%m-%d")
-    try:
-        edit_user = await add_user_info(email=email, name=name, last_name=last_name, birthday=date_obj, nickname=nickname)
-        return {"status": "success", "id": edit_user.id}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
 @router.post("auth/authorization")
 async def authorization_success(payload: dict):
     email = payload.get("email")
@@ -45,3 +31,12 @@ async def authorization_success(payload: dict):
             return {"status": "error", "message": "Invalid credentials"}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+@router.post("/auth/get_id")
+async def get_id_success(payload: dict):
+    email = payload.get("email")
+    user_id = await user_id_by_email(email)
+    if user_id:
+        return {"status": "success", "id": user_id}
+    else:
+        return {"status": "error", "message": "No user found"}

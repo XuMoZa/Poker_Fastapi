@@ -41,5 +41,6 @@ class TablePlayer(Base):
     user_id = Column(Integer)  # из auth/lobby
     joined_at = Column(DateTime, default=datetime.now())
     chips = Column(Integer)
+    avatar = Column(String)
 
     table = relationship("Table", back_populates="players")

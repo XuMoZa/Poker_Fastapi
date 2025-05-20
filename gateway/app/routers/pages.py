@@ -48,17 +48,28 @@ async def registration_success(request: Request,email: pydantic.EmailStr = Form(
 async def registration_with_info(request: Request, name: str = Form(...),
                                last_name: str = Form(...), email: str = Form(...), nickname: str = Form(...), birthday: date = Form(...)):
     async with httpx.AsyncClient() as client:
-        response = await client.post("http://auth_service:8001/auth/registrate", json={
-            "email": email,
-            "name": name,
-            "last_name": last_name,
-            "birthday": birthday,
-            "nickname": nickname,
+        response = await client.post("http://auth_service:8001/auth/get_id", json={
+            "email": email
         })
     if response.status_code == 200:
         data = response.json()
         if data["status"] == "success":
-            return templates.TemplateResponse("base_page.html", {"request": request})
+            async with httpx.AsyncClient() as client:
+                response = await client.post("http://user_service:8003/user/add_info", json={
+                    "name": name,
+                    "last_name": last_name,
+                    "nickname": nickname,
+                    "birthday": birthday,
+                    "user_id": data["id"]
+                })
+            if response.status_code == 200:
+                data = response.json()
+                if data["status"] == "success":
+                    return templates.TemplateResponse("base_page.html", {"request": request})
+                else: return templates.TemplateResponse("registration.html", {"request": request, "message": data["message"]})
+            else:
+                return templates.TemplateResponse("registration.html", {"request": request, "message": data["message"]})
+
         else:
             return templates.TemplateResponse("registration.html", {"request": request, "message": data["message"]})
     else:
