@@ -33,17 +33,21 @@ async def registration_info(request: Request):
 
 @router.post("/registration/info", response_class=HTMLResponse)
 async def registration_success(request: Request,email: pydantic.EmailStr = Form(...),
-                               password: str = Form(...)):
+                               password: str = Form(...), nickname: str = Form(...)):
     async with httpx.AsyncClient() as client:
         response = await client.post("http://auth_service:8001/auth/pre_registrate", json={
             "email": email,
-            "password": password
+            "password": password,
+            "nickname" : nickname
         })
     if response.status_code == 200:
         return templates.TemplateResponse("registration_info.html", {"request": request})
     else:
         return templates.TemplateResponse("registration.html", {"request": request, "message": "registration failed"})
 
+@router.get("/account", response_class=HTMLResponse)
+async def account_page(request: Request):
+    return templates.TemplateResponse("account.html", {"request": request})
 @router.post("/", response_class=HTMLResponse)
 async def registration_with_info(request: Request, name: str = Form(...),
                                last_name: str = Form(...), email: str = Form(...), nickname: str = Form(...), birthday: date = Form(...)):
@@ -58,7 +62,6 @@ async def registration_with_info(request: Request, name: str = Form(...),
                 response = await client.post("http://user_service:8003/user/add_info", json={
                     "name": name,
                     "last_name": last_name,
-                    "nickname": nickname,
                     "birthday": birthday,
                     "user_id": data["id"]
                 })

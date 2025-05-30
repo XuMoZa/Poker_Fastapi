@@ -17,6 +17,7 @@ class Profile(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, unique=True)
     name = Column(String)
+    nickname = Column(String(50), nullable=True)
     last_name = Column(String)
     age = Column(Integer)
     avatar_url = Column(String)

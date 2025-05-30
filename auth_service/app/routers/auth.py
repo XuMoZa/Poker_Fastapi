@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Form, HTTPException, status
 import pydantic
 from starlette.responses import HTMLResponse
-from services .auth_service import drop_db, create_user, authenticate_user, user_id_by_email
+from services.auth_service import drop_db, create_user, authenticate_user, user_id_by_email
 from core.settings import security
 from datetime import date, datetime
 
@@ -12,9 +12,10 @@ router = APIRouter()
 async def registration_success(payload: dict):
     email = payload.get("email")
     password = payload.get("password")
+    nickname = payload.get("nickname")
     try:
 
-        new_user = await create_user(email=email, password=password)
+        new_user = await create_user(email=email, password=password, nickname=nickname)
         return {"status": "success"}
     except ValueError as e:
         raise HTTPException(status_code=401, detail="Invalid credentials")
