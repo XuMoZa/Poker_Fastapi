@@ -1,26 +1,14 @@
 import uvicorn
 from fastapi import FastAPI
+from routers.game_router import router as game_router
+from fastapi.staticfiles import StaticFiles
 from models.playable import Player, Card, Deck, Table
 from game_services.game_service import add_hands, define_combinations
 
-player1 = Player('Misha')
-player2 = Player('Alex')
-table = Table()
-table.deck.shuffle()
-add_hands(table, player1, player2)
+app = FastAPI()
 
-table.add_cards(table.deck.draw(3))
-table.add_cards(table.deck.draw(1))
-table.add_cards(table.deck.draw(1))
-print(table.cards)
-print(player1.hand)
-print(player2.hand)
-data1 = define_combinations(table, player1)
-data2 = define_combinations(table, player2)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.include_router(game_router)
 
-if data1["power"] > data2["power"]:
-    print("player1 win!")
-elif data1["power"] < data2["power"]:
-    print("player2 win!")
-else:
-    print("both players win!")
+if __name__ == "__main__":
+    uvicorn.run(app, port=8000)

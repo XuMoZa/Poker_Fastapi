@@ -37,6 +37,8 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.hand = []  # список карт на руках
+        self.chips = 1000
+
 
     def receive(self, cards):
         if isinstance(cards, list):
@@ -46,6 +48,18 @@ class Player:
 
     def show_hand(self):
         return f"{self.name}'s hand: {', '.join(map(str, self.hand))}"
+
+    def add_chips(self):
+        self.chips = 1000
+
+    def remove_chips(self, count):
+        self.chips -= count
+
+    def get_chips(self):
+        return self.chips
+
+    def __repr__(self):
+        return {'name': self.name, 'chips': self.chips}
 
 class Table:
     def __init__(self):
