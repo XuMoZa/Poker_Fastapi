@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: radial-gradient(circle at center, #1a1a1a, #000);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+form {
+    background: rgba(30, 30, 30, 0.95);
+    border: 2px solid #FFD700;
+    border-radius: 12px;
+    padding: 40px;
+    width: 360px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    z-index: 1;
+}
+
+h1 {
+    text-align: center;
+    color: #FFD700;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px #FFD700;
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #FFD700;
+    border-radius: 8px;
+    background-color: #222;
+    color: #fff;
+    font-size: 14px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #ffea00;
+    box-shadow: 0 0 8px #FFD700;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.form-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background: #FFD700;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-buttons button:hover {
+    background: #ffea00;
+}
+/* ---- Background Poker Shapes ---- */
+.background-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.background-shapes span {
+    position: absolute;
+    display: block;
+    font-size: 28px;
+    color: rgba(255, 215, 0, 0.4); /* Было 0.1 → стало 0.4 */
+    animation: float 15s linear infinite;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.5); /* Добавлено свечение */
+}
+
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.2;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}

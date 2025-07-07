@@ -1,0 +1,78 @@
+/* Стили для уведомлений */
+.alert-container {
+    position: fixed;
+    top: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.alert-message {
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    animation: slideIn 0.5s ease-out forwards, fadeOut 0.5s ease-in 2.5s forwards;
+    transform: translateY(-100px);
+    opacity: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.alert-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alert-icon {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.alert-text {
+    font-size: 15px;
+}
+
+/* Цвета для разных типов сообщений */
+.alert-message.error {
+    background: linear-gradient(135deg, #ff4d4d, #cc0000);
+    border-left: 4px solid #ff0000;
+}
+
+.alert-message.success {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    border-left: 4px solid #2E7D32;
+}
+
+.alert-message.info {
+    background: linear-gradient(135deg, #2196F3, #0D47A1);
+    border-left: 4px solid #0D47A1;
+}
+
+/* Анимации */
+@keyframes slideIn {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+}
