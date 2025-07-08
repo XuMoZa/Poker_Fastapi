@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from datetime import datetime
 from fastapi import HTTPException
 
-from services.user_service import drop_db, add_user, get_profile
+from user_app.services.user_service import drop_db, add_user, get_profile
 
 router = APIRouter()
 
@@ -23,4 +23,4 @@ async def add_user_info(payload : dict):
 async def user_info(payload: dict):
     user_id = payload.get("user_id")
     user = await get_profile(user_id=user_id)
-    return {"user": user}
+    return {"user_id": user}

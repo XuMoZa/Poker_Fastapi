@@ -1,10 +1,15 @@
 from sqlalchemy import Column, Integer, String, Enum, Boolean, ForeignKey, DateTime
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase, relationship
+import os
+from pathlib import Path
 import enum
 from datetime import datetime
 
-engine = create_async_engine('sqlite+aiosqlite:///poker.db')
+db_path = os.getenv("DB_PATH", str(Path(__file__).parent / "data" / "poker.db"))
+os.makedirs(os.path.dirname(db_path), exist_ok=True)
+engine = create_async_engine(f'sqlite+aiosqlite:///{db_path}')
+
 
 new_session = async_sessionmaker(engine, expire_on_commit=False)
 

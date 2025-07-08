@@ -19,11 +19,29 @@ services:
       - ./auth_service/data:/auth_app/auth_app/data
     environment:
       - DB_PATH=/auth_app/auth_app/data/user.db
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
-      interval: 5s
-      timeout: 3s
-      retries: 3
+
+  game_service:
+    build: ./game_service
+    ports:
+      - "8004:8004"
+    networks:
+      - poker_net
+    volumes:
+      - ./game_service/data:/game_app/game_app/data
+    environment:
+      - DB_PATH=/game_app/game_app/data/poker.db
+
+  user_service:
+    build: ./user_service
+    ports:
+      - "8003:8003"
+    networks:
+      - poker_net
+    volumes:
+      - ./user_service/data:/user_app/user_app/data
+    environment:
+      - DB_PATH=/user_app/user_app/data/profile.db
+
 
 
 networks:

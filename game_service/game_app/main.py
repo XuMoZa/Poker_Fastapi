@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from starlette.middleware.sessions import SessionMiddleware
 import uvicorn
-from routers import table_router
-from core.settings import config
+from game_app.routers import table_router
+from game_app.core.settings import config
 
 app = FastAPI()
 

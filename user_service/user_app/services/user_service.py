@@ -1,4 +1,4 @@
-from models.database import engine, Base, new_session, Profile
+from user_app.models.database import engine, Base, new_session, Profile
 import pydantic
 from sqlalchemy.future import select
 from datetime import date
@@ -39,4 +39,8 @@ async def add_user(name:str, last_name:str, birthday:date, user_id : int):
 
 async def get_profile(user_id):
     async with new_session() as session:
-        return await(session.execute(select(Profile).where((Profile.user_id == user_id))).scalars().first())
+        try:
+            user = (await session.execute(select(Profile).where((Profile.user_id == user_id)))).scalars().first()
+        except ValueError as e:
+            return None
+        return user.id

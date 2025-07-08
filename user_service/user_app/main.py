@@ -1,7 +1,6 @@
 from fastapi import FastAPI
-from routers import user
-from models.database import database
-from core.settings import config
+from user_app.routers import user
+from user_app.core.settings import config
 from starlette.middleware.sessions import SessionMiddleware
 import uvicorn
 app = FastAPI()
